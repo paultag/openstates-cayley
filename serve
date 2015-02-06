@@ -1,0 +1,11 @@
+#!/bin/bash
+
+docker run \
+    -v `pwd`:/foo/ \
+    -it --rm \
+    -p 0.0.0.0:8888:8888 \
+    paultag/cayley \
+        http \
+        -host="0.0.0.0" \
+        -dbpath=/foo/tripples \
+        -port 8888
