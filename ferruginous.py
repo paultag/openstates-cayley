@@ -72,10 +72,63 @@ def graph_bill(bill):
             yield Tripple(id_, "/bill/sponsor/{}".format(sponsor['type']), lid)
 
 
+def graph_person(person):
+    """
+    /legislator/name
+    /legislator/party
+    /legislator/state
+    /committee/member
+    """
+    lid = Id(person['_id'])
+    name = person['full_name']
+    state = person['state']
+
+    yield Tripple(lid, "/legislator/name", name)
+    yield Tripple(lid, "/legislator/state", state)
+    for role in person.get("roles", []):
+        cid = role.get("committee_id", None)
+        if cid is None:
+            continue
+        yield Tripple(lid, "/committee/member", Id(cid))
+
+    party = person.get("party", None)
+    if party:
+        slug = party.lower().replace(" ", "-")
+        party_id = "/political/party/{}".format(slug)
+        yield Tripple(lid, "/legislator/party", Id(party_id))
+
+
+def graph_vote(vote):
+    """
+    /vote/passed
+    /vote/state
+    /legislator/vote/yes
+    /legislator/vote/no
+    /legislator/vote/other
+    """
+    vid = Id(vote['_id'])
+    state = vote['state']
+
+    yield Tripple(vid, "/vote/state", state)
+    yield Tripple(vid, "/vote/passed", "true" if vote['passed'] else "false")
+
+    for vk, tk in [
+        ("yes_votes", "yes"),
+        ("no_votes", "no"),
+        ("other_votes", "other"),
+    ]:
+        for entry in vote[vk]:
+            lid = entry.get("leg_id")
+            if lid is None:
+                continue
+            yield Tripple(Id(lid), "/legislator/vote/{}".format(tk), vid)
+
 
 def graph(node):
     yield from {
         "bill": graph_bill,
+        "person": graph_person,
+        "vote": graph_vote,
     }[node['_type']](node)
 
 
@@ -95,8 +148,8 @@ def main(state=None):
 
     for iterable in [
         db.bills,
-        # db.legislators,
-        # db.votes,
+        db.legislators,
+        db.votes,
     ]:
         output(map(graph, iterable.find(query)))
 
