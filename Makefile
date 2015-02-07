@@ -7,7 +7,7 @@ tripples: $(STATES)
 
 
 $(STATES):
-	python3 ferruginous.py > $@
+	python3 ferruginous.py $@ > $@
 
 clean:
 	rm -rvf $(STATES) tripples
