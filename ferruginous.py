@@ -107,7 +107,7 @@ def graph_vote(vote):
     /legislator/vote/other
     """
     vid = Id(vote['_id'])
-    state = vote['state']
+    state = Id(vote['state'])
 
     yield Tripple(vid, "/vote/state", state)
     yield Tripple(vid, "/vote/passed", "true" if vote['passed'] else "false")
