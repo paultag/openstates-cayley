@@ -28,6 +28,8 @@ class Tripple:
         x = str(node)
         x = x.replace("\\", "\\\\") if "\\" in x else x
         x = x.replace('"', '\\"') if '"' in x else x
+        x = x.replace('\n', '\\n') if '\n' in x else x
+        x = x.replace('\r', '\\r') if '\r' in x else x
 
         return '"{}"'.format(x)
 
