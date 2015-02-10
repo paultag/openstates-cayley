@@ -24,7 +24,11 @@
 # /vote/passed
 </vote/passed> </type/object/type> </type/property> .
 </vote/passed> </property/name> "Vote passed" .
-</vote/passed> </property/description> "Did the vote pass or not? ...." .
+</vote/passed> </property/description> "Did the vote pass or not?" .
 </vote/passed> </property/expected_type> </type/bool> .
 
 # /vote/state
+</vote/state> </type/object/type> </type/property> .
+</vote/state> </property/name> "Vote state" .
+</vote/state> </property/description> "What state this vote took place in" .
+</vote/state> </property/expected_type> </type/relation> .
