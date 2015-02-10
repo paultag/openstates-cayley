@@ -1,3 +1,8 @@
+# Commitee Tripples
+# /committee/member
+
+
+# Bill Tripples
 # /bill/sponsor/primary
 # /bill/sponsor/secondary
 # /bill/subject
@@ -5,17 +10,21 @@
 # /bill/state
 # /bill/session
 # /bill/title
-# /legislator/name
-# /legislator/party
-# /legislator/state
-# /committee/member
-# /vote/passed
-# /vote/state
+
+# Legislator Tripples
 # /legislator/vote/yes
 # /legislator/vote/no
 # /legislator/vote/other
+# /legislator/name
+# /legislator/party
+# /legislator/state
 
+
+# Vote Tripples
+# /vote/passed
 </vote/passed> </type/object/type> </type/property> .
 </vote/passed> </property/name> "Vote passed" .
 </vote/passed> </property/description> "Did the vote pass or not? ...." .
 </vote/passed> </property/expected_type> </type/bool> .
+
+# /vote/state
