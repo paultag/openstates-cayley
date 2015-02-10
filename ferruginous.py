@@ -60,15 +60,17 @@ def graph_bill(bill):
     yield Tripple(id_, "/bill/state", state)
     yield Tripple(id_, "/bill/session", session)
 
-    for subject in bill.get("subjects", []) + bill.get("scraped_subjects", []):
-        yield Tripple(id_, "/bill/subject", subject)
+    for subject in bill.get("subjects", []):  # + bill.get("scraped_subjects", []):
+        slug = subject.lower().replace(" ", "-")
+        subject = "/subject/{}".format(slug)
+        yield Tripple(id_, "/bill/subject", Id(subject))
 
 
     for sponsor in bill['sponsors']:
         lid = sponsor['leg_id']
         if lid is not None:
             lid = Id(lid)
-            yield Tripple(id_, "/bill/sponsor", lid)
+            # yield Tripple(id_, "/bill/sponsor", lid)
             yield Tripple(id_, "/bill/sponsor/{}".format(sponsor['type']), lid)
 
 
@@ -117,6 +119,7 @@ def graph_vote(vote):
         ("no_votes", "no"),
         ("other_votes", "other"),
     ]:
+        # yield Tripple(Id(lid), "/legislator/vote", vid)
         for entry in vote[vk]:
             lid = entry.get("leg_id")
             if lid is None:
