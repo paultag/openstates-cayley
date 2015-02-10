@@ -7,5 +7,5 @@ docker run \
     paultag/cayley \
         http \
         -host="0.0.0.0" \
-        -dbpath=/foo/tripples \
+        -dbpath=/foo/$1 \
         -port 8888

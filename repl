@@ -5,4 +5,4 @@ docker run \
     -it --rm \
     paultag/cayley \
         repl \
-        -dbpath=/foo/tripples
+        -dbpath=/foo/$1
