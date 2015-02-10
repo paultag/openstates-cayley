@@ -45,12 +45,12 @@ def graph_bill(bill):
     """
     /bill/sponsor/primary
     /bill/sponsor/secondary
-    /bill/sponsor
 
     /bill/subject
 
     /bill/id
     /bill/state
+    /bill/title
     /bill/session
     """
     id_ = Id(bill['_id'])

@@ -1,0 +1,21 @@
+# /bill/sponsor/primary
+# /bill/sponsor/secondary
+# /bill/subject
+# /bill/id
+# /bill/state
+# /bill/session
+# /bill/title
+# /legislator/name
+# /legislator/party
+# /legislator/state
+# /committee/member
+# /vote/passed
+# /vote/state
+# /legislator/vote/yes
+# /legislator/vote/no
+# /legislator/vote/other
+
+</vote/passed> </type/object/type> </type/property> .
+</vote/passed> </property/name> "Vote passed" .
+</vote/passed> </property/description> "Did the vote pass or not? ...." .
+</vote/passed> </property/expected_type> </type/bool> .
