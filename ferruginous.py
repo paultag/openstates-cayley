@@ -57,6 +57,7 @@ def graph_bill(bill):
     session = bill['session']
 
     yield Tripple(id_, "/bill/id", bill_id)
+    yield Tripple(id_, "/bill/title", bill['title'])
     yield Tripple(id_, "/bill/state", state)
     yield Tripple(id_, "/bill/session", session)
 
