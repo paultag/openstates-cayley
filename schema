@@ -8,12 +8,40 @@
 
 # Bill Tripples
 # /bill/sponsor/primary
+</bill/sponsor/primary> </type/object/type> </type/property> .
+</bill/sponsor/primary> </property/name> "Primary sponsor" .
+</bill/sponsor/primary> </property/expected_type> </type/relation> .
+
 # /bill/sponsor/secondary
+</bill/sponsor/secondary> </type/object/type> </type/property> .
+</bill/sponsor/secondary> </property/name> "Secondary sponsor" .
+</bill/sponsor/secondary> </property/expected_type> </type/relation> .
+
 # /bill/subject
+</bill/subject> </type/object/type> </type/property> .
+</bill/subject> </property/name> "Bill subject" .
+</bill/subject> </property/expected_type> </type/relation> .
+
 # /bill/id
+</bill/id> </type/object/type> </type/property> .
+</bill/id> </property/name> "Bill ID (state-issued)" .
+</bill/id> </property/expected_type> </type/string> .
+
 # /bill/state
+</bill/state> </type/object/type> </type/property> .
+</bill/state> </property/name> "State this legislation was introduced into" .
+</bill/state> </property/expected_type> </type/relation> .
+
 # /bill/session
+</bill/id> </type/object/type> </type/property> .
+</bill/id> </property/name> "Legislative session this bill was introduced into" .
+</bill/id> </property/expected_type> </type/string> .
+
 # /bill/title
+</bill/id> </type/object/type> </type/property> .
+</bill/id> </property/name> "Title of the Legislation" .
+</bill/id> </property/expected_type> </type/string> .
+
 
 # Legislator Tripples
 # /legislator/vote/yes
