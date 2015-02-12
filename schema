@@ -1,5 +1,9 @@
 # Commitee Tripples
 # /committee/member
+</committee/member> </type/object/type> </type/property> .
+</committee/member> </property/name> "A committee member" .
+</committee/member> </property/description> "Shows a relation from a person to a committee" .
+</committee/member> </property/expected_type> </type/relation> .
 
 
 # Bill Tripples
