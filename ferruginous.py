@@ -110,12 +110,15 @@ def graph_vote(vote):
     /legislator/vote/yes
     /legislator/vote/no
     /legislator/vote/other
+    /bill/vote
     """
     vid = Id(vote['_id'])
+    bid = Id(vote['bill_id'])
     state = Id(vote['state'])
 
     yield Tripple(vid, "/vote/state", state)
     yield Tripple(vid, "/vote/passed", "true" if vote['passed'] else "false")
+    yield Tripple(bid, "/bill/vote", vid)
 
     for vk, tk in [
         ("yes_votes", "yes"),
