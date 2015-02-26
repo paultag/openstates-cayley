@@ -15,8 +15,8 @@
 (let [[leg "CAL000141"]
       [c (CayleyClient "http://localhost:8888")]
       [edges (query c (.V leg)
-                      (.In "/bill/sponsor/cosponsor")
-                      (.Out "/bill/sponsor/cosponsor")
+                      (.In ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"])
+                      (.Out ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"])
                       (.All))]
       [rank (Counter (map (fn [x] (get x "id")) edges))]]
 
