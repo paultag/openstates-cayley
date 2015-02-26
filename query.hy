@@ -12,10 +12,14 @@
     (get (. ~g!response result) "result")))
 
 
-(let [[c (CayleyClient "http://localhost:8888")]
-      [edges (query c (.V "CAL000141")
+(let [[leg "CAL000141"]
+      [c (CayleyClient "http://localhost:8888")]
+      [edges (query c (.V leg)
                       (.In "/bill/sponsor/cosponsor")
                       (.Out "/bill/sponsor/cosponsor")
                       (.All))]
       [rank (Counter (map (fn [x] (get x "id")) edges))]]
-    (print rank))
+
+  (print (.format "Most often sponsors with {}" leg))
+  (for [(, leg rank) (.most-common rank 20)]
+    (print " " leg rank)))
