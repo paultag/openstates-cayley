@@ -1,0 +1,3 @@
+pymongo
+-e git://github.com/ziyasal/pyley.git#egg=pyley
+hy
