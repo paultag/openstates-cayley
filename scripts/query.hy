@@ -1,4 +1,5 @@
-(import [cayley [fetcher]]
+(import sys
+        [cayley [fetcher]]
         [collections [Counter]])
 (require cayley)
 
@@ -13,7 +14,8 @@
       (print value (apply fmt.format [] (get info leg))))))
 
 
-(let [[leg "CAL000141"]
+; e.g. CAL000141
+(let [[leg (get sys.argv 1)]
       [Fetch (fetcher "leg_id")]]
 
   (cayley/connect "http://localhost:8888"
