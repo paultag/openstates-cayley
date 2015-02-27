@@ -1,44 +1,33 @@
-(import [pyley [CayleyClient GraphObject]]
+(import [cayley [fetcher]]
         [collections [Counter]])
+(require cayley)
 
 
-(defmacro/g! cayley/connect [server &rest body]
-  `(let [[-cayley-server (CayleyClient ~server)]] ~@body))
+(defn most-common [els]
+  (.most-common (Counter (map (fn [x] (get x "id")) els)) 20))
 
 
-(defmacro/g! g-> [&rest things]
-  `(let [[g (GraphObject)]
-         [~g!query (-> g ~@things)]]
-    ~g!query))
+(defn print/ranked [ordering info]
+  (let [[fmt "({state}) {name} - {id}"]]
+    (for [(, leg value) ordering]
+      (print value (apply fmt.format [] (get info leg))))))
 
 
-(defmacro/g! query/g-> [&rest body]
-  `(. (.Send -cayley-server (g-> ~@body)) result ["result"]))
+(let [[leg "CAL000141"]
+      [Fetch (fetcher "leg_id")]]
 
+  (cayley/connect "http://localhost:8888"
+    (let [[g (GraphObject)]
+          [cosponsors (query (-> g (.V leg)
+              (.In ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"])
+              (.Out ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"])
+              (.All)))]
+          [partners-in-crime (most-common cosponsors)]
+          [m (query (-> (apply g.V (map first partners-in-crime))
+                          (.Tag "leg_id")
+                          (Fetch "name" "/legislator/name")
+                          (Fetch "state" "/legislator/state")
+                          (.All)))]
+          [data (dict-comp (get x "id") x [x m])]]
 
-(defn fetcher [root]
-  (fn [el tag path] (-> el (.Out path) (.Tag tag) (.Back root))))
-
-;;;;;;;;;;;;;;;;;;;;;;
-;;;;;;;;;;;;;;;;;;;;;;
-
-
-(cayley/connect "http://localhost:8888"
-  (let [[leg "CAL000141"]
-        [Fetch (fetcher "leg_id")]
-        [cosponsors (query/g->
-          (.V leg)
-            (.In ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"])
-            (.Out ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"])
-            (.Tag "leg_id")
-
-            (Fetch "name" "/legislator/name")
-            (Fetch "state" "/legislator/state")
-
-            (.GetLimit 20))]
-        [-- (print (get cosponsors 2))]
-        [rank (Counter (map (fn [x] (get x "id")) cosponsors))]]
-
-  (print (.format "Most often sponsors with {}" leg))
-  (for [(, leg rank) (.most-common rank 20)]
-    (print " " leg rank))))
+    (print/ranked partners-in-crime data))))
