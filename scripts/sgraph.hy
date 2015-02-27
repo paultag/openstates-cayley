@@ -12,6 +12,13 @@
 (defmacro g-> [&rest args] `(-> g ~@args))
 
 
+(defn ->t<- [el tag name back]
+  (-> el
+    (--> tag)
+    (.Tag name)
+    (.Back back)))
+
+
 (defmacro defn/g [name signature &rest body]
   `(defn ~name [~@signature]
      (import [pyley [GraphObject]])
@@ -23,9 +30,9 @@
   (? server
     (g-> (.V)
       (.Tag "leg_id")
-      (--> "/legislator/name")
-      (.Tag "name")
-      (.Back "leg_id")
+      ; get name and state
+      (->t<- "/legislator/name" "name" "leg_id")
+      (->t<- "/legislator/state" "state" "leg_id")
       (.All))))
 
 
@@ -48,9 +55,12 @@
     (generate-vector-count data)))
 
 
+(defn save-data [leg vector]
+  (print leg vector))
+
+
 (defn generate-sponsorship-vector [server leg]
-  ; XXX: Save the vector to the DB here.
-  (print (sponsorship-vector server leg)))
+  (save-data leg (sponsorship-vector server leg)))
 
 
 (defn generate-sponsorship-vectors [server legs]
