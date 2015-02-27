@@ -16,6 +16,12 @@
   `(. (.Send -cayley-server (g-> ~@body)) result ["result"]))
 
 
+(defn Fetch [el tag path]
+  (-> el
+    (.Out path)
+    (.Tag tag)
+    (.Back "leg_id")))
+
 ;;;;;;;;;;;;;;;;;;;;;;
 ;;;;;;;;;;;;;;;;;;;;;;
 
@@ -26,7 +32,13 @@
           (.V leg)
             (.In ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"])
             (.Out ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"])
-            (.All))]
+            (.Tag "leg_id")
+
+            (Fetch "name" "/legislator/name")
+            (Fetch "state" "/legislator/state")
+
+            (.GetLimit 10))]
+        [-- (print (get cosponsors 2))]
         [rank (Counter (map (fn [x] (get x "id")) cosponsors))]]
 
   (print (.format "Most often sponsors with {}" leg))
