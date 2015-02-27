@@ -13,6 +13,7 @@
 
 
 (defn ->t<- [el tag name back]
+  "Out, tag and return, to fetch additional attributes"
   (-> el
     (--> tag)
     (.Tag name)
