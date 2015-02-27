@@ -14,6 +14,11 @@
       (print value (apply fmt.format [] (get info leg))))))
 
 
+(if (< (len sys.argv) 2)
+  (do (print "Enter an arg, like CAL000141")
+      (.exit sys 1)))
+
+
 ; e.g. CAL000141
 (let [[leg (get sys.argv 1)]
       [Fetch (fetcher "leg_id")]]
