@@ -8,12 +8,10 @@ tripples: $(STATES)
 
 $(STATES):
 	python3 ../scripts/compile.py $@ > $@
+	../bin/load $@
 
 clean:
 	rm -rvf $(STATES) tripples
-
-load: tripples
-	../bin/load tripples
 
 all: load
 

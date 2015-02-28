@@ -70,7 +70,9 @@
 
 
 (defn generate-sponsorship-vectors [server legs]
-  (for [leg legs] (generate-sponsorship-vector server leg)))
+  (for [leg legs]
+    (print (get leg "id"))
+    (generate-sponsorship-vector server leg)))
 
 
 (let [[client (CayleyClient "http://localhost:8888")]]
