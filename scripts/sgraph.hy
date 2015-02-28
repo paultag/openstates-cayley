@@ -34,7 +34,7 @@
       ; get name and state
       (->t<- "/legislator/name" "name" "leg_id")
       (->t<- "/legislator/state" "state" "leg_id")
-      (.All))))
+      .All)))
 
 
 (defn generate-vector-count [data]
@@ -48,11 +48,12 @@
 (defn/g sponsorship-vector [server leg]
   " Generate the vector of sponsorships "
   (let [[leg-id (get leg "id")]
+        [sponsored ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"]]
         [data (? server
                 (g-> (.V leg-id)
-                  (<-- ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"])
-                  (--> ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"])
-                  (.All)))]]
+                  (<-- sponsored)
+                  (--> sponsored)
+                  .All))]]
     (generate-vector-count data)))
 
 
