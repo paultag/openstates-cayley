@@ -1,4 +1,5 @@
-(import [collections [Counter]]
+(import json
+        [collections [Counter]]
         [pyley [CayleyClient GraphObject]])
 
 
@@ -42,7 +43,7 @@
     []
     (let [[stream (map (fn [x] (get x "id")) data)]
           [count (Counter stream)]]
-      (.most-common count 20))))
+      (.most-common count))))
 
 
 (defn/g sponsorship-vector [server leg]
@@ -58,7 +59,11 @@
 
 
 (defn save-data [leg vector]
-  (print leg vector))
+  (let [[path (.format "{}.json" (get leg "leg_id"))]]
+    (assoc leg "cohorts" vector)
+    (with [[fd (open path "w")]]
+      (print (.format "Writing {}" path))
+      (.dump json leg fd))))
 
 
 (defn generate-sponsorship-vector [server leg]
