@@ -142,9 +142,16 @@ def graph(node):
 
 
 def output(it):
+    seen = set()
     for el in it:
         for tripple in el:
-            print(tripple.to_cayley())
+            el = tripple.to_cayley()
+            if el in seen:
+                sys.stderr.write("Skipping tripple: {}\n".format(el))
+                sys.stderr.flush()
+                continue
+            seen.add(el)
+            print(el)
 
 
 
