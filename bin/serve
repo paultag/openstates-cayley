@@ -1,0 +1,13 @@
+#!/bin/bash
+set -e
+
+docker run \
+    -v `pwd`:/foo/ \
+    -it --rm \
+    -p 0.0.0.0:8888:8888 \
+    paultag/cayley \
+        http \
+        -host="0.0.0.0" \
+        -db=leveldb \
+        -dbpath=/foo/$1.ldb \
+        -port 8888

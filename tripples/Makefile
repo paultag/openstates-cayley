@@ -12,6 +12,9 @@ $(STATES):
 clean:
 	rm -rvf $(STATES) tripples
 
-all: tripples
+load: tripples
+	../bin/load tripples
 
-.PHONY: clean all
+all: load
+
+.PHONY: clean all load

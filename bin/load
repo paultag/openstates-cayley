@@ -26,16 +26,3 @@ if [ ! -e `pwd`/$1.ldb ]; then
             -dbpath=/foo/$1.ldb \
             -quads=/foo/$1
 fi
-
-echo "Doing bringup"
-
-docker run \
-    -v `pwd`:/foo/ \
-    -it --rm \
-    -p 0.0.0.0:8888:8888 \
-    paultag/cayley \
-        http \
-        -host="0.0.0.0" \
-        -db=leveldb \
-        -dbpath=/foo/$1.ldb \
-        -port 8888
