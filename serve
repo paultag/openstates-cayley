@@ -1,4 +1,33 @@
 #!/bin/bash
+set -e
+
+if [ ! -e `pwd`/$1 ]; then
+    echo "No such file"
+    exit 1
+fi
+
+if [ ! -e `pwd`/$1.ldb ]; then
+    echo "Init'ing the DB"
+    docker run \
+        -v `pwd`:/foo/ \
+        -it --rm \
+        paultag/cayley \
+            init \
+            -db=leveldb \
+            -dbpath=/foo/$1.ldb
+
+    echo "Loading the DB"
+    docker run \
+        -v `pwd`:/foo/ \
+        -it --rm \
+        paultag/cayley \
+            load \
+            -db=leveldb \
+            -dbpath=/foo/$1.ldb \
+            -quads=/foo/$1
+fi
+
+echo "Doing bringup"
 
 docker run \
     -v `pwd`:/foo/ \
@@ -7,5 +36,6 @@ docker run \
     paultag/cayley \
         http \
         -host="0.0.0.0" \
-        -dbpath=/foo/$1 \
+        -db=leveldb \
+        -dbpath=/foo/$1.ldb \
         -port 8888

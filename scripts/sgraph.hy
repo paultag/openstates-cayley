@@ -8,7 +8,6 @@
 
 
 (defmacro --> [&rest args] `(.Out ~@args))
-(defmacro <--> [&rest args] `(.Both ~@args))
 (defmacro <-- [&rest args] `(.In ~@args))
 (defmacro g-> [&rest args] `(-> g ~@args))
 
