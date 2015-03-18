@@ -43,6 +43,7 @@ class Tripple:
 
 def graph_bill(bill):
     """
+    /bill/sponsor
     /bill/sponsor/primary
     /bill/sponsor/secondary
 
@@ -73,7 +74,7 @@ def graph_bill(bill):
         lid = sponsor['leg_id']
         if lid is not None:
             lid = Id(lid)
-            # yield Tripple(id_, "/bill/sponsor", lid)
+            yield Tripple(id_, "/bill/sponsor", lid)
             yield Tripple(id_, "/bill/sponsor/{}".format(sponsor['type']), lid)
 
 
