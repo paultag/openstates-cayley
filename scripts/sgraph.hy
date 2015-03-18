@@ -48,7 +48,7 @@
 (defn/g sponsorship-vector [server leg]
   " Generate the vector of sponsorships "
   (let [[leg-id (get leg "id")]
-        [sponsored ["/bill/sponsor/cosponsor" "/bill/sponsor/primary"]]
+        [sponsored "/bill/sponsor"]
         [data (? server
                 (g-> (.V leg-id)
                   (<-- sponsored)
